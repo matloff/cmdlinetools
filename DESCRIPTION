@@ -1,0 +1,15 @@
+Package: cmdlinetools
+Version: 1.0.0
+Author: Norm Matloff <normmatloff@gmail.com>
+Maintainer: Norm Matloff <normmatloff@gmail.com>
+Date: 6/7/2015
+Title: Handy Command Line Tools for R
+Description: Handy aids for working with the R command line, either
+   instead of systems like ESS and RStudio, or to supplement their
+   capabilities.  Working with command history, debugging aids and so
+   on.
+Depends: gtools
+LazyLoad: no
+ByteCompile: yes
+NeedsCompilation: no
+License: GPL (>= 2)
