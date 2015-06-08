@@ -14,7 +14,7 @@ library(gtools)
 # return value: character vector of the commands, 
 #               or if ask = TRUE, the selection number 
 
-cmds <- function(wild=NULL,exc=NULL,keep=FALSE,ask=TRUE) {
+cmds <- function(wild=NULL,exc=NULL,keep=FALSE,ask=FALSE) {
    savehistory("cmdshistory")
    allcmds <- scan("cmdshistory",what="",sep="\n",
       quiet=TRUE)
