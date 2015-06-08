@@ -59,6 +59,12 @@ l <- function(m=NULL,n=NULL) {
    }
 }
 
+# convenient setting of breakpoint; must call trace(function) to cancel
+b <- defmacro(linenum, expr={
+   setBreakpoint(srcname,linenum)
+})
+
+
 ############################## other stuff #########################
 
 # quick-and-dirty edit; invoke text editor on f, and write back to f; 
