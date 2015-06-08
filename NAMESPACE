@@ -1,5 +1,10 @@
 
 import(gtools)
 
-export(cmds,cmdn,mcde)
+export(
+   cmds,cmdn,cmde,
+   srci,odf,tb,cl,l,b,
+   fedit,relib,evalrstring,
+   pr2file
+)
  
