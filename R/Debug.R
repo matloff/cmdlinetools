@@ -1,6 +1,8 @@
 
 # routines to aid in the debugging process
 
+library(gtools)
+
 # for debugging exec errors
 odf <- function() options(error=dump.frames)
 
@@ -25,12 +27,12 @@ srci <- function(src) {
 # find line on which the debugger currently stands
 cl <- function() {
    rec <- readLines("debugrecord")
-   target <- paste(srcname,"#",sep="")
+   target <- "debug at"
    for (i in length(rec):1) {
       reci <- rec[i]
       ge <- gregexpr(target,reci)[[1]]
       if (ge == 1) {
-         numbersign <- gregexpr("#",r)[[1]][1]
+         numbersign <- gregexpr("#",reci)[[1]][1]
          if (numbersign < 0) continue
          linenumstart <- numbersign + 1
          tmp <- substr(reci,linenumstart,nchar(reci))
@@ -38,8 +40,7 @@ cl <- function() {
          return(as.integer(substr(tmp,1,colon-1)))
       }
    }
-   print("line number not found; maybe you didn't call debug() or
-   browser()?")
+   print("line number not found")
 }
 
 # print the lines in app from m to n; if one of them is null, print all within
@@ -53,16 +54,9 @@ l <- function(m=NULL,n=NULL) {
       n <- min(length(applines),cli+5)
    }
    for (i in m:n) {
-      if (i == cli) 
-         cat("CURRENT: ")
+      if (i == cli) cat("* ")
       cat(i,applines[i],"\n",sep=" ")
    }
-}
-
-# set breakpoint at line linenum; can be turned off only by
-# untrace(functionname), which also cancels debug(functionname)
-b <- function(linenum) {
-   setBreakpoint(srcname,linenum)
 }
 
 ############################## other stuff #########################
