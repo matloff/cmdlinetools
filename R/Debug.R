@@ -83,6 +83,5 @@ relib <- function(pkg) {
 
 # execute the given R expression
 evalrstring <- function(toexec) {
-   cat(toexec,file="tmpexec")
-   source("tmpexec")
+   eval(parse(text=toexec))
 }

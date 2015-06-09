@@ -4,7 +4,7 @@ import(gtools)
 export(
    cmds,cmdn,cmde,
    srci,odf,tb,cl,l,b,
-   fedit,relib,evalrstring,
+   fedit,relib,evalrstring,docmdmac,
    pr2file
 )
  
