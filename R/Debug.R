@@ -17,11 +17,13 @@ tb <- function() traceback()
 # conveniently setting a breakpoint, etc. 
 
 # init; srci() must be called each time you modify 'src'!
-srci <- function(src) {
+srci <- function(src,debug=TRUE) {
    srcname <<- src
    source(src)
-   applines <<- readLines(src)
-   sink(file="debugrecord",split=T)
+   if (debug) {
+      applines <<- readLines(src)
+      sink(file="debugrecord",split=T)
+   }
 }
 
 # find line on which the debugger currently stands
