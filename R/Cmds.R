@@ -34,7 +34,7 @@ cmds <- function(wild=NULL,exc=NULL,keep=FALSE,ask=FALSE) {
       foundcmds <- c(foundcmds,ci)
    }
    if (ask) {
-      resp <- readline("enter command numberi:  ")
+      resp <- readline("enter command number:  ")
       if (resp == "") return()
       return(resp)
    }
