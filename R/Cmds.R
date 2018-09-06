@@ -102,7 +102,7 @@ makeNoParen <- function(cmdname,cmd) {
 # 
 # x <- 8
 # makeNoParen('w','x <<- x + 1')
-# x
+# x  # prints 8
 # w
-# x
+# x  # prints 9
 
