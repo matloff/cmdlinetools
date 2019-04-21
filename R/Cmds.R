@@ -1,23 +1,27 @@
 
+require(gtools)
 
-# library(gtools)
+# globals:
 
-# cmds(): lists recent commands
+#    allcmds:  current command history
+
+######################  cmnds()  ###################################
+
+# lists all commands so far in the current session
+
 # arguments:
 #    wild: character string for indicating wild card 
-#          to be matched at start of command
+#       to be matched at start of command
 #    exc: exclude commands with containing this string
 #    keep: return a vector of found commands
 #    ask: prompt the user for the number of a command 
-#         to execute (Enter means none); 'ask' and 
+#       to execute (Enter means none); 'ask' and 
 #    'keep' should not both be set to TRUE
-# return value: character vector of the commands, 
-#               or if ask = TRUE, the selection number 
+# value: if 'keep', character vector of the commands, 
+#    or 'ask', the selection number 
 
 cmds <- function(wild=NULL,exc=NULL,keep=FALSE,ask=FALSE) {
-   savehistory("cmdshistory")
-   allcmds <- scan("cmdshistory",what="",sep="\n",
-      quiet=TRUE)
+   getallcmds()
    foundcmds <- NULL
    for (i in 1:length(allcmds)) {
       ci <- allcmds[i]
@@ -41,10 +45,12 @@ cmds <- function(wild=NULL,exc=NULL,keep=FALSE,ask=FALSE) {
    if (keep) foundcmds
 }
 
-# cmdn(), "command number"; executes the command of 
-# the given number, like Unix shell '!n'
+######################  cmdn()  ###################################
+
+# executes the command of the given number, like Unix shell, e.g. '!12'
+
 cmdn <- defmacro(cmdnum,expr={
-      allcmds <- scan("cmdshistory",what="",sep="\n")
+      getallcmds()
       # allcmds <- invisible(cmds(keep=TRUE))
       wishcmd <- allcmds[cmdnum]
       cat(">>",wishcmd,"\n")
@@ -52,8 +58,10 @@ cmdn <- defmacro(cmdnum,expr={
    }
 )
 
-# cmdw(), "command wild card":  execute latest 
-# wild match, if any
+######################  cmdw()  ###################################
+
+# execute latest wild match, if any; like Unix shell, e.g. !ls
+
 cmdw <- defmacro(wld,expr={
       tmp <- cmds(wild=wld,keep=TRUE,ask=FALSE)
       wishcmd <- tmp[length(tmp)]
@@ -63,22 +71,57 @@ cmdw <- defmacro(wld,expr={
    }
 )
 
-# cmde(), "command execute":  execute command number 
-# specified by user after he/she views commands list
+######################  cmde()  ###################################
+
+# execute command number optionally specified by user after she views
+# commands list; user can preface with 'e', e.g. 'e 12' to edit cmd 12
+# and then execute
+
 cmde <- defmacro(dummy,expr={
       wishcmd <- cmds(ask=TRUE)
       if (wishcmd != "") {
-         cmdn(as.integer(wishcmd))
+         getallcmds()
+         tmp <- strsplit(wishcmd,' ')[[1]]
+         if (tmp[1] == 'e') {
+             cmdnum <- as.integer(tmp[2])
+             newcmd <- edit(allcmds[cmdnum])
+             docmdmac(newcmd)
+             cat(newcmd,'\n')
+         } else  {
+             cmdnum <- as.integer(tmp[1])
+             cmdn(cmdnum)
+             cat(allcmds[cmdnum],'\n')
+         }
       }
    }
 )
+
+######################  getallcmds()  ################################
+
+# utility; updates the global, 'allcmds'
+
+getallcmds <- function() 
+{
+   savehistory("cmdshistory")  # base R ftn
+   allcmds <<- scan("cmdshistory",what="",sep="\n",quiet=TRUE)
+}
+
+######################  docmdmac()  #################################
  
-# executes specified command at the caller's level
+# utility: executes specified command at the caller's level
+
 docmdmac <- defmacro(strcmd,
    expr={eval(parse(text=strcmd))})
 
-# return TRUE if patt is found in s
+######################  docmdmac()  #################################
+
+# utility: return TRUE if patt is found in s
+
 grepyes <- function(patt,s) length(grep(patt,s)) > 0
+
+######################  makeNoParen()  ###############################
+
+# insidious!!!!
 
 # for creating quick, short commands with no parentheses!
 # typing cmdname at '>' will execute cmd
