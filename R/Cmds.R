@@ -149,3 +149,20 @@ makeNoParen <- function(cmdname,cmd) {
 # w
 # x  # prints 9
 
+
+######################  obje()  ###################################
+
+# lists objects with ls(); if user responds with object number, then
+# apply str() to that object
+
+obje <- defmacro(dummy,expr={
+         lsout <- ls()
+         print(lsout)
+         num <- readline('apply str() to? ')
+         browser()
+         if (num != '') {
+            obj <- lsout[as.numeric(num)]
+            docmdmac(paste0('str(',obj,')')) }
+         }
+)
+
