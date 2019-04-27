@@ -1,0 +1,25 @@
+
+Cmds.R:
+
+   cmde():  
+   
+      lists all previous commands in this R session; asks user for number,
+      say 12; '12' means re-do cmd 12, 'e 12' means edit cmd 12, then
+      exec new version
+
+   cmdn(n):
+
+      re-exec cmd n; like Unix !12
+
+   cmdw(s):
+
+      re-exec last cmd containing the char string s
+
+   obje():
+
+      like cmde() for object browsing; calls ls(), asks user to pick
+      one; applies str() to that one
+
+   makeNoParen():
+
+      make a cmd that we can execute without parentheses, for quick exec

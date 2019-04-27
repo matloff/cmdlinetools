@@ -79,20 +79,21 @@ cmdw <- defmacro(wld,expr={
 
 cmde <- defmacro(dummy,expr={
       wishcmd <- cmds(ask=TRUE)
-      if (wishcmd != "") {
+      if (!is.null(wishcmd)) {
          getallcmds()
          tmp <- strsplit(wishcmd,' ')[[1]]
          if (tmp[1] == 'e') {
              cmdnum <- as.integer(tmp[2])
              newcmd <- edit(allcmds[cmdnum])
-             docmdmac(newcmd)
+             allcmds <<- c(allcmds,newcmd)
+             cmdn(length(allcmds))
              cat(newcmd,'\n')
          } else  {
              cmdnum <- as.integer(tmp[1])
              cmdn(cmdnum)
              cat(allcmds[cmdnum],'\n')
          }
-      }
+      } 
    }
 )
 
@@ -159,7 +160,6 @@ obje <- defmacro(dummy,expr={
          lsout <- ls()
          print(lsout)
          num <- readline('apply str() to? ')
-         browser()
          if (num != '') {
             obj <- lsout[as.numeric(num)]
             docmdmac(paste0('str(',obj,')')) }
