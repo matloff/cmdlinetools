@@ -2,7 +2,7 @@
 import(gtools)
 
 export(
-   cmds,cmdn,cmde,cmdw,
+   cmds,cmdn,cmde,cmdw,getallcmds,
    srci,odf,tb,cl,l,b,obje,
    makeNoParen,grepyes,
    fedit,relib,evalrstring,docmdmac,
