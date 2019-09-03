@@ -73,9 +73,9 @@ l <- function(m=NULL,n=NULL) {
 
 # abbreviation, so can type ll instead of l()
 make_ll <- function() {
-   require(ksrREPL)
+   require(ksREPL)
    ll <<- ksrProto
-   ll.f <- l
+   ll$f <<- l
 }
 
 # convenient setting of breakpoint; must call trace(function) to cancel

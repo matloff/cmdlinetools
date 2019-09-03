@@ -3,7 +3,7 @@ import(gtools)
 
 export(
    cmds,cmdn,cmde,cmdw,getallcmds,
-   srci,odf,tb,cl,l,b,obje,
+   srci,odf,tb,cl,l,b,obje,make_ll,
    fedit,relib,evalrstring,docmdmac,
    pr2file
 )
