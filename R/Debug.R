@@ -26,6 +26,7 @@ tb <- function() traceback()
 
 # init; srci() must be called each time you modify 'src'!
 srci <- function(src,debug=TRUE) {
+   make <- ll()
    srcname <<- src
    source(src)
    if (debug) {
