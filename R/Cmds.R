@@ -105,6 +105,7 @@ getallcmds <- function()
 {
    savehistory("cmdshistory")  # base R ftn
    allcmds <<- scan("cmdshistory",what="",sep="\n",quiet=TRUE)
+   unlink('cmdshistory')
 }
 
 ######################  docmdmac()  #################################
@@ -114,42 +115,11 @@ getallcmds <- function()
 docmdmac <- defmacro(strcmd,
    expr={eval(parse(text=strcmd))})
 
-######################  docmdmac()  #################################
+######################  grepyes()  #################################
 
 # utility: return TRUE if patt is found in s
 
 grepyes <- function(patt,s) length(grep(patt,s)) > 0
-
-######################  makeNoParen()  ###############################
-
-# insidious!!!!
-
-# for creating quick, short commands with no parentheses!
-# typing cmdname at '>' will execute cmd
-
-# could be done more elegantly than this, but just execute this and then
-# copy and paste the output at the R prompt
-
-makeNoParen <- function(cmdname,cmd) {
-      cat(paste0(cmdname,'<- list(y=3)'),'\n');
-      tmp <- sample(1:100,1);
-      classname <- paste0('c',as.character(tmp));
-      cat(paste0('class(',cmdname,') <- "',classname,'"'),'\n');
-      printcmd <- paste0('print.',classname);
-      obj <- paste0(classname,'Object')
-      printcmd <- paste0(printcmd,' <- function(',obj,') ');
-      printcmd <- paste0(printcmd,cmd);
-      cat(printcmd,'\n')
-}
-
-# example:
-# 
-# x <- 8
-# makeNoParen('w','x <<- x + 1')
-# x  # prints 8
-# w
-# x  # prints 9
-
 
 ######################  obje()  ###################################
 

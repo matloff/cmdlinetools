@@ -3,7 +3,15 @@
 
 library(gtools)
 
-# for debugging exec errors
+# globals:
+
+#   srcname: name of the source file being debugger (assumes just 1)
+#   applines: lines of that file
+
+#####################  misc. debug ops  ############################
+
+# for debugging runtime errors; after running this, whenever have a
+# runtime error, run debugger()
 odf <- function() options(error=dump.frames)
 
 # typing saver
@@ -22,13 +30,15 @@ srci <- function(src,debug=TRUE) {
    source(src)
    if (debug) {
       applines <<- readLines(src)
-      sink(file="debugrecord",split=T)
+      # to avoid cluttering current directory, this goes to the home
+      # directory; TODO: make the location an option
+      sink(file="~/debugrecord",split=T)
    }
 }
 
 # find line on which the debugger currently stands
 cl <- function() {
-   rec <- readLines("debugrecord")
+   rec <- readLines("~/debugrecord")
    target <- "debug at"
    for (i in length(rec):1) {
       reci <- rec[i]
@@ -46,7 +56,7 @@ cl <- function() {
 }
 
 # print the lines in app from m to n; if one of them is null, print all within
-# 5 lines in that direciton
+# 5 lines in that direction
 l <- function(m=NULL,n=NULL) {
    cli <- cl()
    if (is.null(m)) {
@@ -59,6 +69,13 @@ l <- function(m=NULL,n=NULL) {
       if (i == cli) cat("* ")
       cat(i,applines[i],"\n",sep=" ")
    }
+}
+
+# abbreviation, so can type ll instead of l()
+make_ll <- function() {
+   require(ksrREPL)
+   ll <<- ksrProto
+   ll.f <- l
 }
 
 # convenient setting of breakpoint; must call trace(function) to cancel
