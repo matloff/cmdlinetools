@@ -5,6 +5,7 @@ export(
    cmds,cmdn,cmde,cmdw,getallcmds,
    srci,odf,tb,cl,l,b,obje,make_ll,
    fedit,relib,evalrstring,docmdmac,
+   whichFilesHave,
    pr2file
 )
  
