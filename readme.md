@@ -46,6 +46,8 @@ journal.)
 
 $x^2$
 
+$\sum_{i=1}^n a_i$
+
 1. The Tidyverse arose from the desire to have a set of packages that
    are consistent with each other, a "purist" philosophy that appeals,
 for instance, to theoretical computer scientists.  The Tidyverse also
