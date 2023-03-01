@@ -31,9 +31,7 @@ srci <- function(src,debug=TRUE) {
    source(src)
    if (debug) {
       applines <<- readLines(src)
-      # to avoid cluttering current directory, this goes to the home
-      # directory; TODO: make the location an option
-      sink(file="~/debugrecord",split=T)
+      sink(file="debugrecord",split=T)
    }
 }
 
@@ -75,7 +73,8 @@ l <- function(m=NULL,n=NULL) {
 # abbreviation, so can type ll instead of l()
 make_ll <- function() {
    require(ksREPL)
-   ll <<- ksrProto
+   ksInit()
+   ll <<- ksProto
    ll$f <<- l
 }
 
